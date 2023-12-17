@@ -1,0 +1,23 @@
+{
+  "name": "todolist",
+  "version": "1.0.0",
+  "description": "",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "nodemon server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/98sachin/123456-04.git"
+  },
+  "author": "Sachin Sharma",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/98sachin/123456-04/issues"
+  },
+  "homepage": "https://github.com/98sachin/123456-04#readme",
+  "dependencies": {
+    "nodemon": "^3.0.2"
+  }
+}
