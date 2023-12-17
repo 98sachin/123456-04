@@ -1,71 +1,22 @@
-const http = require("http");  // importing http
-const { CLIENT_RENEG_LIMIT } = require("tls");
-const port = 8000;  // getting a port number
+// const http = require("http"); // in expressjs we will not be having http protocol. instead we will have (check next line)
+const express = require("express");
 
-const toDoList = ["hey everyone","hope you all","are doing","great in life."]; // initializing an array
+// initialisation 
+const app = express()
 
-// creating a server
-http.createServer((req,res)=>{
+// after initializing we need to use the app created
+app.use(express.json()) // app will now only use json data format(the benefito of using express)
 
-     // callback functions
-     const {method,url}=req;
-     // console.log(method,url);
- 
-     if(url==="/todos"){
-         if(method==="GET"){
-             console.log("todos route, n its a GET Method");
-             res.writeHead(200,{"Content-Type":"text/html"});
-             res.write(toDoList.toString())
-         }else if(method==="POST"){
-            let body="";
-            req.on('error',(err)=>{ 
-                console.log(err) 
-            }).on('data',(chunk)=>{
-                body += chunk
-                console.log("chunk: ", chunk);
+const port=8000;
 
-            }).on('end',()=>{
-                body = JSON.parse(body);
-                console.log("data: ",body);
-                let newToDo=toDoList;
-                newToDo.push(body.item);
-            })
-         }else if(method==="PUT"){
-         }else if(method==="DELETE"){
-            let body="";
-            req.on('error',(err)=>{
-                console.log(err)
-            }).on('data',(chunk)=>{
-                body+=chunk;
-            }).on('end',()=>{
-                body=JSON.parse(body);
-                let deleteThis= body.item;
+const toDoList = ["hey everyone","hope you all","are doing","great in life."];  //array
 
-                // for(let i=0; i<toDoList.length; i++){
-                //     if (toDoList[i]===deleteThis){
-                //         toDoList.splice(i,1);
-                //         break;
-                //     }
-                // }
-                
-                // OR
-
-                toDoList.find((elem,index)=>{
-                    if(elem===deleteThis){
-                        toDoList.splice(index,1)
-                    }
-                })
-            })
-         }else{
-             res.writeHead(501);
-         }
-        }
-     else if(url==="/"){
-        console.log("/ home default route")
-     }   
-     res.end();
-
+// here with express to call the api , we follow the below code
+app.get("/todos",(req,res)=>{
+    //callback
+    res.status(200).send(toDoList)
 })
-.listen(port,()=>{
-    console.log(`NodeJs Server Started Running On Port ${port}`);
+
+app.listen(port,()=>{
+    console.log(`Node JS with express started running successfully on port ${port}`)
 })
